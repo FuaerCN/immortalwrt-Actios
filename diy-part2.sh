@@ -27,3 +27,9 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 # git clone https://github.com/gSpotx2f/luci-app-cpu-status-mini package/luci-app-cpu-status-mini
 # git clone https://github.com/lkiuyu/luci-app-temp-status package/luci-app-temp-status
 # git clone https://github.com/lkiuyu/DbusSmsForwardCPlus package/DbusSmsForwardCPlus
+
+# 修复 glib2-gobject 缺少 libffi 依赖的问题
+if [ -f "feeds/packages/libs/glib2/Makefile" ]; then
+    echo "🛠️ 正在修复 glib2 Makefile 的 libffi 依赖..."
+    sed -i '/Package\/glib2-gobject/,/^\s*$/{s/DEPENDS:=\(.*\)/DEPENDS:=\1 +libffi/}' feeds/packages/libs/glib2/Makefile
+fi
